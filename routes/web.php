@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::match(['get', 'post', 'put', 'delete', 'patch'], 'webhook/{unique_url}', [WebhookController::class, 'store']);
+Route::get('webhook/{unique_url}/{webhookId?}', [WebhookController::class, 'show'])->name('webhook.show');
+Route::delete('webhook/{unique_url}/delete', [WebhookController::class, 'delete'])->name('webhook.delete');
